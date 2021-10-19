@@ -7,7 +7,7 @@ module Model =
     type Sound = Tab * PowerChord * PM
     
     type Rhythm = 
-        | Eights = 0
+        | Eighths = 0
         | Gallop = 1
         | RGallop = 2
 
