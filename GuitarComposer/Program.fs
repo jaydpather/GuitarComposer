@@ -2,14 +2,20 @@
 
 open System
 
+let rec printColumn (columnText:string list) curColumn curRow =
+    match columnText with 
+    | [] -> ()
+    | head::tail ->
+        Console.SetCursorPosition(curColumn, curRow)
+        Console.Write(head)
+        printColumn tail curColumn (curRow+1)
 
-let rec printSectionOutput (sectionText:string list) curColumn curRow = 
+let rec printSectionOutput (sectionText:string list list) curColumn curRow = 
     match sectionText with
     | [] -> curRow
     | head::tail -> 
-        Console.SetCursorPosition(curColumn, curRow)
-        Console.Write(head)
-        printSectionOutput tail curColumn curRow+1
+        printColumn head curColumn curRow    
+        printSectionOutput tail curColumn curRow+8
     
 
 let rec printRiffOutput output curColumn curRow = 
@@ -17,7 +23,7 @@ let rec printRiffOutput output curColumn curRow =
     | [] -> ()
     | head::tail ->
         let lastRow = printSectionOutput head curColumn curRow
-        printRiffOutput tail (curColumn+1) (lastRow+2)
+        printRiffOutput tail (curColumn) (lastRow+2)
         ()
 
 
@@ -27,15 +33,17 @@ let main argv =
 
     let riff = LogicLayer.Composer.composeRiff 0u []
     
-    printfn "%A" riff
+    //printfn "%A" riff
 
     
     let output = 
-        LogicLayer.Composer.composeRiff 0u []
+        riff
         |> TextFormatter.getTextOutput
 
-    output
-    |> printfn "%A" 
+    //output
+    //|> printfn "%A" 
 
+
+    printRiffOutput output 0 0
 
     0 // return an integer exit code

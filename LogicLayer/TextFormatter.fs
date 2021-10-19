@@ -48,13 +48,13 @@ let rec getSectionTextHelper sound (strList:string list list) baseText  =
 let getSectionText section = 
     let (sound, rhythm) = section
     match rhythm with 
-    | Eigths -> getSectionTextHelper sound [] (List.append [getSoundText sound] [getRestText()])
-    | Gallop -> 
+    | Rhythm.Eighths -> getSectionTextHelper sound [] (List.append [getSoundText sound] [getRestText()])
+    | Rhythm.Gallop -> 
         let soundText = getSoundText sound
         //[]
         let baseText = [soundText] @ [getRestText()] @ [soundText] @ [soundText]
         getSectionTextHelper sound [] baseText
-    | RGallop -> 
+    | Rhythm.RGallop -> 
         let soundText = getSoundText sound
         let baseText = [soundText] @ [soundText] @ [getRestText()] @ [soundText]
         getSectionTextHelper sound [] baseText
