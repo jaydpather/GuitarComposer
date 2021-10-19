@@ -18,7 +18,7 @@ let getPowerChordSymbol sound =
 
 let getRestText() =
     [ 
-        BLANK; 
+        " ";
         BLANK;
         BLANK;
         BLANK;
@@ -30,7 +30,7 @@ let getRestText() =
 let getSoundText sound =
     let (tab, isPowerChord, isPM) = sound
     [ 
-        if isPM then "P" else ""; 
+        if isPM then "P" else " "; 
         tab.ToString();
         getPowerChordSymbol sound;
         getPowerChordSymbol sound;

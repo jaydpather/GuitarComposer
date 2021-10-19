@@ -4,7 +4,7 @@ open System
 
 let rec printColumn (columnText:string list) curColumn curRow =
     match columnText with 
-    | [] -> ()
+    | [] -> curRow
     | head::tail ->
         Console.SetCursorPosition(curColumn, curRow)
         Console.Write(head)
@@ -12,10 +12,10 @@ let rec printColumn (columnText:string list) curColumn curRow =
 
 let rec printSectionOutput (sectionText:string list list) curColumn curRow = 
     match sectionText with
-    | [] -> curRow
+    | [] -> curColumn
     | head::tail -> 
-        printColumn head curColumn curRow    
-        printSectionOutput tail curColumn curRow+8
+        let newRow = printColumn head curColumn curRow    
+        printSectionOutput tail (curColumn+1) curRow
     
 
 let rec printRiffOutput output curColumn curRow = 
@@ -40,10 +40,10 @@ let main argv =
         riff
         |> TextFormatter.getTextOutput
 
-    //output
-    //|> printfn "%A" 
+    //output |> printfn "%A" 
 
 
     printRiffOutput output 0 0
+    Console.WriteLine()
 
     0 // return an integer exit code
