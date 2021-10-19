@@ -43,19 +43,20 @@ let rec getSectionTextHelper sound (strList:string list list) baseText  =
     if strList.Length >= 8 then
         strList
     else
-        getSectionTextHelper sound (List.append [baseText] strList) baseText
+        getSectionTextHelper sound (List.append strList baseText) baseText
 
 let getSectionText section = 
     let (sound, rhythm) = section
     match rhythm with 
-    | Eigths -> getSectionTextHelper sound [] (List.append (getSoundText sound) (getRestText()))
+    | Eigths -> getSectionTextHelper sound [] (List.append [getSoundText sound] [getRestText()])
     | Gallop -> 
         let soundText = getSoundText sound
-        let baseText = soundText @ getRestText() @ soundText @ soundText
+        //[]
+        let baseText = [soundText] @ [getRestText()] @ [soundText] @ [soundText]
         getSectionTextHelper sound [] baseText
     | RGallop -> 
         let soundText = getSoundText sound
-        let baseText = soundText @ soundText @ getRestText() @ soundText
+        let baseText = [soundText] @ [soundText] @ [getRestText()] @ [soundText]
         getSectionTextHelper sound [] baseText
 
 let getTextOutput riff =
